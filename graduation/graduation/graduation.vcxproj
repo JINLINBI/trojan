@@ -23,14 +23,15 @@
     <ProjectGuid>{FBF57103-F81A-4DAD-8D46-B87007C9F07A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>graduation</RootNamespace>
-    <WindowsTargetPlatformVersion>xp</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -91,7 +92,6 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/SUBSYSTEM:CONSOLE,”5.01” %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -151,7 +151,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\OneDrive\Documents\毕业设计\源代码\CSmtp.h" />
     <ClInclude Include="CmdServer.h" />
-    <ClInclude Include="FileServer.h" />
     <ClInclude Include="graduation.h" />
     <ClInclude Include="KeyboardHook.h" />
     <ClInclude Include="RegisterHEKY.h" />
@@ -162,8 +161,10 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\OneDrive\Documents\毕业设计\源代码\base64.cpp" />
     <ClCompile Include="..\..\..\..\OneDrive\Documents\毕业设计\源代码\CSmtp.cpp" />
+    <ClCompile Include="aes.cpp" />
     <ClCompile Include="CmdServer.cpp" />
-    <ClCompile Include="FileServer.cpp" />
+    <ClCompile Include="filecmd.cpp" />
+    <ClCompile Include="filecommand.cpp" />
     <ClCompile Include="graduation.cpp" />
     <ClCompile Include="KeyboardHook.cpp" />
     <ClCompile Include="RegisterHEKY.cpp" />

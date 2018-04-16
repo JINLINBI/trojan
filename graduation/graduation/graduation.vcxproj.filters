@@ -39,9 +39,6 @@
     <ClInclude Include="RegisterHEKY.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="FileServer.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -65,7 +62,13 @@
     <ClCompile Include="RegisterHEKY.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="FileServer.cpp">
+    <ClCompile Include="aes.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="filecmd.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="filecommand.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
