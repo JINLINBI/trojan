@@ -56,22 +56,16 @@
     <Image Include="res\cclient.ico">
       <Filter>资源文件</Filter>
     </Image>
-    <Image Include="..\..\..\..\Downloads\File.ico">
+    <Image Include="res\trojan_horse.ico">
       <Filter>资源文件</Filter>
     </Image>
-    <Image Include="..\..\..\..\Downloads\File_Manager.ico">
+    <Image Include="res\File.ico">
       <Filter>资源文件</Filter>
     </Image>
-    <Image Include="..\..\..\..\Downloads\trojan_horse_32px_584530_easyicon.net.ico">
+    <Image Include="res\File_Manager.ico">
       <Filter>资源文件</Filter>
     </Image>
-    <Image Include="..\..\..\..\Downloads\FILEENCODE.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Downloads\bitbug_favicon.ico">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Downloads\bitbug_favicon (1).ico">
+    <Image Include="res\FILEENCODE.ico">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

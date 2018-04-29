@@ -98,6 +98,7 @@ bool downloadFileCommand(LPCWSTR filename, SOCKET socketfd) {
 	leftlen = GetFileSize(fd, NULL);
 	if (fd) {
 		while (leftlen > 0) {
+			ZeroMemory(&pac, sizeof(pac));
 			ReadFile(fd, pac.data, 1024, (LPDWORD)&readedCount, NULL);
 			leftlen -= readedCount;
 			if (leftlen <= 0) {
@@ -106,7 +107,7 @@ bool downloadFileCommand(LPCWSTR filename, SOCKET socketfd) {
 			}
 			else {
 				pac.type = 1;
-				send(socketfd, (const char*)&pac, sizeof(pac), 0);
+				send(socketfd, (const char*)&pac, readedCount + 1, 0);
 			}
 		}
 		return true;
@@ -198,7 +199,7 @@ vector<wstring> findFile(wstring dir)
 			vec.push_back(wstring(L"/") + stFD.cFileName);
 		}
 		else {
-
+			ZeroMemory(buf, sizeof(buf));
 			HANDLE fd = CreateFile(stFD.cFileName, GENERIC_READ, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 			ReadFile(fd, buf, sizeof(buf), (LPDWORD)&readCount, 0);
 			if (readCount < 0) {

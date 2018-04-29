@@ -207,13 +207,11 @@
     <None Include="res\cclient.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\Downloads\bitbug_favicon (1).ico" />
-    <Image Include="..\..\..\..\Downloads\bitbug_favicon.ico" />
-    <Image Include="..\..\..\..\Downloads\File.ico" />
-    <Image Include="..\..\..\..\Downloads\FILEENCODE.png" />
-    <Image Include="..\..\..\..\Downloads\File_Manager.ico" />
-    <Image Include="..\..\..\..\Downloads\trojan_horse_32px_584530_easyicon.net.ico" />
     <Image Include="res\cclient.ico" />
+    <Image Include="res\File.ico" />
+    <Image Include="res\FILEENCODE.ico" />
+    <Image Include="res\File_Manager.ico" />
+    <Image Include="res\trojan_horse.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
