@@ -2,10 +2,10 @@
 class CmdServer
 {
 public:
-	CmdServer(int);
+	CmdServer(int = CMDPORT);
 	~CmdServer();
-	int listenAtPort();
+	int listen();
 private:
-	int MasterPort = 2333;
+	int MasterPort = 0;
 };
 

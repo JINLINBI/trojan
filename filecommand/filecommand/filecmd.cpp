@@ -110,10 +110,9 @@ bool downloadFileCommand(LPCWSTR filename, SOCKET socketfd) {
 				send(socketfd, (const char*)&pac, readedCount + 1, 0);
 			}
 		}
+		CloseHandle(fd);
 		return true;
 	}
-
-	CloseHandle(fd);
 	return false;
 }
 
@@ -352,5 +351,11 @@ bool upDirCommand() {
 	popLastDirCommand();
 
 	return false;
+}
+
+bool execCommand(LPCWSTR filename) {
+
+	ShellExecute(NULL, (LPCWSTR)L"open", filename, (LPCWSTR)L"", (LPCWSTR)L"", SW_NORMAL);
+	return true;
 }
 
